@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Main {
+public class Substitution {
 
 	
 	public static void main(String[] args) {
@@ -17,6 +17,7 @@ public class Main {
 			System.out.println("(C)easar/Shift cypher");
 			System.out.println("(A)ffine cypher");
 			System.out.println("(V)iginere cypher");
+			System.out.println("(S)hift test");
 			System.out.println("(T)emp");
 			temp = scan.nextLine();
 			if(temp.isEmpty()){
@@ -24,16 +25,22 @@ public class Main {
 			}else if(temp.toLowerCase().charAt(0)== 'c'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
-				caeser(temp);
+				caeser(temp);//refactor later
 			}else if(temp.toLowerCase().charAt(0)== 'a'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
-				affine(temp);
+				affine(temp);//refactor later
 			}else if(temp.toLowerCase().charAt(0)=='v'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
-				viginere(temp, scan);
+				System.out.println(viginere(temp, scan));
 				
+			}else if (temp.toLowerCase().charAt(0)=='s') {
+				System.out.println("Text to test:");
+				temp = scan.nextLine();
+				for (int i = 0; i < 10; i++) {
+					System.out.println(i+": "+shiftTestCollision(i, temp));
+				}
 			}else if(temp.toLowerCase().charAt(0)=='t'){
 				System.out.println(tempFunction(0));
 				System.out.println(tempFunction(1));
@@ -64,7 +71,7 @@ public class Main {
 	}
 		
 	@SuppressWarnings("unchecked")
-	private static void viginere(String input, Scanner scan){
+	private static String viginere(String input, Scanner scan){
 		//TODO: fix output?
 		String temp = "";
 		System.out.println("Please choose the correct length:");
@@ -93,8 +100,7 @@ public class Main {
 				}
 			}
 		}
-		System.out.println("The answer should be:");
-		System.out.println(toString(temp1));
+		return toString(temp1);
 	}
 	
 	private static int shiftTestCollision(int shift, String input){
