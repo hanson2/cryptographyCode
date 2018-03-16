@@ -18,6 +18,7 @@ public class Substitution {
 			System.out.println("(A)ffine cypher");
 			System.out.println("(V)iginere cypher");
 			System.out.println("(S)hift test");
+			System.out.println("(F)requency Count");
 			System.out.println("(T)emp");
 			temp = scan.nextLine();
 			if(temp.isEmpty()){
@@ -41,6 +42,18 @@ public class Substitution {
 				for (int i = 0; i < 10; i++) {
 					System.out.println(i+": "+shiftTestCollision(i, temp));
 				}
+			}else if(temp.toLowerCase().charAt(0)=='f'){
+				System.out.println("Text to analyze:");
+				temp = scan.nextLine();
+				ArrayList<Integer> base = toIntArray(temp);
+				double[] ans = frequencyCount(base);
+				base = new ArrayList<Integer>();
+				base.add(0);
+				for (int i = 0; i < ans.length; i++) {
+					base.set(0, i);
+					System.out.println(toString(base)+ ": "+ ans[i]);
+				}
+				
 			}else if(temp.toLowerCase().charAt(0)=='t'){
 				System.out.println(tempFunction(0));
 				System.out.println(tempFunction(1));
@@ -75,7 +88,7 @@ public class Substitution {
 		//TODO: fix output?
 		String temp = "";
 		System.out.println("Please choose the correct length:");
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 26; i++) {
 			System.out.println(i+": "+shiftTestCollision(i, input));
 		}temp = scan.nextLine();
 		int len = Integer.parseInt(temp);
@@ -89,18 +102,23 @@ public class Substitution {
 		for (int i = 0; i < base.size(); i++) {
 			arrayLists[i%len].add(base.get(i));
 		}
+		Output[] outputs = new Output[arrayLists.length];
 		for (int i = 0; i < arrayLists.length; i++) {//replace with array of Outputs? to get code
-			arrayLists[i]=caeserInt(arrayLists[i]);
+			outputs[i]=caeserInt(arrayLists[i]);
 		}
-		int len1 = arrayLists[0].size();
+		int len1 = outputs[0].base.size();
 		for (int i = 0; i < len1; i++) {
 			for (int j = 0; j < arrayLists.length; j++) {
-				if (i<arrayLists[j].size()) {
-					temp1.add(arrayLists[j].get(i));	
+				if (i<outputs[j].base.size()) {
+					temp1.add(outputs[j].base.get(i));	
 				}
 			}
 		}
-		return toString(temp1);
+		ArrayList<Integer> key = new ArrayList<Integer>();
+		for (int i = 0; i < outputs.length; i++) {
+			key.add(outputs[i].shift);
+		}
+		return toString(key) + ": " + toString(temp1);
 	}
 	
 	private static int shiftTestCollision(int shift, String input){
@@ -155,7 +173,7 @@ public class Substitution {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static ArrayList<Integer> caeserInt(ArrayList<Integer> base) {
+	private static Output caeserInt(ArrayList<Integer> base) {
 		double[] a0=a0generator();
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		for (int i = 1; i < 26; i++) {
@@ -163,7 +181,7 @@ public class Substitution {
 			outputs.add(new Output(base, (26-i), vectorComparison(frequencyCount(base), a0)));
 		}
 		Collections.sort(outputs);
-		return outputs.get(0).base;
+		return outputs.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
