@@ -17,26 +17,30 @@ public class Substitution {
 			System.out.println("(C)easar/Shift cypher");
 			System.out.println("(A)ffine cypher");
 			System.out.println("(V)iginere cypher");
-			System.out.println("(S)hift test");
+			System.out.println("(S)ubstitution");
+			System.out.println("(T)est shift");
 			System.out.println("(F)requency Count");
-			System.out.println("(T)emp");
 			temp = scan.nextLine();
 			if(temp.isEmpty()){
 				notDone = false;
 			}else if(temp.toLowerCase().charAt(0)== 'c'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
-				caeser(temp);//refactor later
+				System.out.println(caeser(temp));
 			}else if(temp.toLowerCase().charAt(0)== 'a'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
-				affine(temp);//refactor later
+				System.out.println(affine(temp));
 			}else if(temp.toLowerCase().charAt(0)=='v'){
 				System.out.println("Text to decrypt:");
 				temp = scan.nextLine();
 				System.out.println(viginere(temp, scan));
 				
 			}else if (temp.toLowerCase().charAt(0)=='s') {
+				System.out.println("Not Yet Implemented");
+				//temp = scan.nextLine();
+				//add subsititution function
+			}else if (temp.toLowerCase().charAt(0)=='t') {
 				System.out.println("Text to test:");
 				temp = scan.nextLine();
 				for (int i = 0; i < 10; i++) {
@@ -54,152 +58,14 @@ public class Substitution {
 					System.out.println(toString(base)+ ": "+ ans[i]);
 				}
 				
-			}else if(temp.toLowerCase().charAt(0)=='t'){
-				System.out.println("Enter phrase to decode:");
-				temp = scan.nextLine();
-				tempFunction(temp, scan);
 			}
 		}
-		}
-	private static void tempFunction(String input, Scanner scan) {
-		// TODO broken
-		String temp = "";
-		String ans = "";
-		System.out.println("Please enter the password:");
-		temp = scan.nextLine();
-		char[][] key = new char[5][5];
-		ArrayList<Character> inputs = new ArrayList<Character>();
-		for (int i = 0; i < key.length; i++) {
-			for (int j = 0; j < key.length; j++) {
-				if ((i+j)<temp.length()) {
-					if (inputs.contains(temp.charAt(i+j))) {
-						if (temp.charAt(i) == 'j') {
-							key[i][j] = 'i';
-							inputs.add('i');
-							inputs.add('j');
-						}
-						else{
-							key[i][j] = temp.charAt(i+j);
-						}
-					}
-				}else{
-					if (!inputs.contains('a')) {
-						inputs.add('a');
-						key[i][j]='a';
-					}else if (!inputs.contains('b')) {
-						inputs.add('b');
-						key[i][j]='b';
-					}else if (!inputs.contains('c')) {
-						inputs.add('c');
-						key[i][j]='c';
-					}else if (!inputs.contains('d')) {
-						inputs.add('d');
-						key[i][j]='d';
-					}else if (!inputs.contains('e')) {
-						inputs.add('e');
-						key[i][j]='e';
-					}else if (!inputs.contains('f')) {
-						inputs.add('f');
-						key[i][j]='f';
-					}else if (!inputs.contains('g')) {
-						inputs.add('g');
-						key[i][j]='g';
-					}else if (!inputs.contains('h')) {
-						inputs.add('h');
-						key[i][j]='h';
-					}else if (!inputs.contains('i')) {
-						inputs.add('i');
-						key[i][j]='i';
-					}else if (!inputs.contains('k')) {
-						inputs.add('k');
-						key[i][j]='k';
-					}else if (!inputs.contains('l')) {
-						inputs.add('l');
-						key[i][j]='l';
-					}else if (!inputs.contains('m')) {
-						inputs.add('m');
-						key[i][j]='m';
-					}else if (!inputs.contains('n')) {
-						inputs.add('n');
-						key[i][j]='n';
-					}else if (!inputs.contains('o')) {
-						inputs.add('o');
-						key[i][j]='o';
-					}else if (!inputs.contains('p')) {
-						inputs.add('p');
-						key[i][j]='p';
-					}else if (!inputs.contains('q')) {
-						inputs.add('q');
-						key[i][j]='q';
-					}else if (!inputs.contains('r')) {
-						inputs.add('r');
-						key[i][j]='r';
-					}else if (!inputs.contains('s')) {
-						inputs.add('s');
-						key[i][j]='s';
-					}else if (!inputs.contains('t')) {
-						inputs.add('t');
-						key[i][j]='t';
-					}else if (!inputs.contains('u')) {
-						inputs.add('u');
-						key[i][j]='u';
-					}else if (!inputs.contains('v')) {
-						inputs.add('v');
-						key[i][j]='v';
-					}else if (!inputs.contains('w')) {
-						inputs.add('w');
-						key[i][j]='w';
-					}else if (!inputs.contains('x')) {
-						inputs.add('x');
-						key[i][j]='x';
-					}else if (!inputs.contains('y')) {
-						inputs.add('y');
-						key[i][j]='y';
-					}else if (!inputs.contains('z')) {
-						inputs.add('z');
-						key[i][j]='z';
-					}
-				}
-			}
-		}
-		for (int k = 0; k < temp.length(); k++) {
-			int[] loc1 = findLocation(key, temp.charAt(k));
-			int[] loc2 = findLocation(key, temp.charAt(k+1));
-			if (loc1.equals(loc2)) {//same thing twice
-				ans+=key[loc1[0]][loc1[1]]+key[loc1[0]][loc1[1]];
-			}else if(loc1[0]==loc2[0]){//same colomn
-				ans+=key[loc1[0]][(loc1[1]-1)%5]+key[loc2[0]][(loc2[1]-1)%5];
-			}else if(loc1[1]==loc2[1]){//same row
-				ans+=key[(loc1[0]-1)%5][loc1[1]]+key[(loc2[0]-1)%5][loc2[1]];
-			}else{//different row and column
-				ans+=key[loc1[0]][loc2[1]]+key[loc2[0]][loc1[1]];
-			}
-			k++;//go by 2 each cycle
-		}
-		System.out.println(ans);
-		
 	}
-	
-	@SuppressWarnings("unused")
-	private static int[] findLocation(char[][] key, char letter){
-		int[] ans = new int[2];
-		for (int i = 0; i < key.length; i++) {
-			for (int j = 0; j < key.length; j++) {
-				if (letter == key[i][j]){
-					ans[0] = i;
-					ans[1] = j;
-					return ans;
-				}
-			}
-		}
-		return ans;
-	}
-		
 	@SuppressWarnings("unchecked")
 	private static String viginere(String input, Scanner scan){
 		//TODO: fix output?
 		String temp = "";
-		System.out.println("Please choose the correct length:");
+		System.out.println("Please choose the correct length:");//change to param
 		for (int i = 0; i < 26; i++) {
 			System.out.println(i+": "+shiftTestCollision(i, input));
 		}temp = scan.nextLine();
@@ -248,9 +114,6 @@ public class Substitution {
 		return ans;
 	}
 	
-	
-	
-	
 	private static ArrayList<Integer> multiplyBase(ArrayList<Integer> base, int i) {
 		// TODO Auto-generated method stub
 		ArrayList<Integer> ans = new ArrayList<Integer>();
@@ -297,10 +160,11 @@ public class Substitution {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void caeser(String temp) {
+	private static String caeser(String temp) {
+		String ans = "";
 		double[] a0=a0generator();
 		ArrayList<Integer> base = toIntArray(temp);
-		printLine(0, base);
+		ans = printLine(0, base);
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		for (int i = 1; i < 26; i++) {
 			base = incrementBase(base);
@@ -308,18 +172,20 @@ public class Substitution {
 		}
 		Collections.sort(outputs);
 		for (int i = 0; i < 3; i++) {
-			printLine(outputs.get(i).shift, outputs.get(i).base);
+			ans = ans + printLine(outputs.get(i).shift, outputs.get(i).base);
 		}
+		return ans;
 		
 		
 	}
 	@SuppressWarnings("unchecked")
-	private static void affine(String temp){
+	private static String affine(String temp){
+		String ans = "";
 		double[] a0=a0generator();
 		ArrayList<Integer> base = toIntArray(temp);
 		ArrayList<Integer> orig = toIntArray(temp);
 		ArrayList<Integer> base1 = toIntArray(temp);
-		printLine(0, base);
+		ans = printLine(0, base);
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		int k = 0;
 		for (int j = 0; j < 13; j++) {
@@ -337,8 +203,9 @@ public class Substitution {
 		}
 		Collections.sort(outputs);
 		for (int i = 0; i < 7; i++) {
-			printLine(outputs.get(i).shift, outputs.get(i).base);
+			ans = ans + printLine(outputs.get(i).shift, outputs.get(i).base);
 		}
+		return ans;
 		
 	}
 
@@ -356,14 +223,15 @@ public class Substitution {
 		return ans;
 	}
 
-	private static void printLine(int b, ArrayList<Integer> base) {
-		
+	private static String printLine(int b, ArrayList<Integer> base) {
+		String ans = "";
 		if(b==0){
-			System.out.println("The base is");
+			ans = "The base is:"+'\n';
 		}else{
-			System.out.println("-"+b);
+			ans = "-"+b+'\n';
 		}
-		System.out.println(toString(base));
+		ans = ans +toString(base)+'\n';
+		return ans;
 	}
 
 	private static ArrayList<Integer> toIntArray(String temp) {
