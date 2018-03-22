@@ -2,6 +2,7 @@ package basic;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Square {
 	public static void main(String[] args) {
@@ -27,19 +28,37 @@ public class Square {
 		}
 	}
 	
-	private static String playFair(String input, String password) {
+	private static String playFair(String input, String password) {//TODO: how do I get numbers out?
 		String ans = "";
 		
 		char[][]key = generateKey(password);
+		for (int i = 0; i < key.length; i++) {
+			for (int j = 0; j < key.length; j++) {
+				System.out.println(key[i][j]);
+			}
+		}
+		
 		for (int k = 0; k < password.length(); k++) {
 			int[] loc1 = findLocation(key, password.charAt(k));
 			int[] loc2 = findLocation(key, password.charAt(k+1));
 			if (loc1.equals(loc2)) {//same thing twice
-				ans+=key[loc1[0]][loc1[1]]+key[loc1[0]][loc1[1]];
+				ans = ans + key[loc1[0]][loc1[1]]+key[loc1[0]][loc1[1]];
 			}else if(loc1[0]==loc2[0]){//same colomn
-				ans+=key[loc1[0]][(loc1[1]-1)%5]+key[loc2[0]][(loc2[1]-1)%5];
+				if(loc1[1]==0){
+					loc1[1]=5;
+				}
+				if(loc2[1]==0){
+					loc2[1]=5;
+				}
+				ans = ans + key[loc1[0]][(loc1[1]-1)]+key[loc2[0]][(loc2[1]-1)];
 			}else if(loc1[1]==loc2[1]){//same row
-				ans+=key[(loc1[0]-1)%5][loc1[1]]+key[(loc2[0]-1)%5][loc2[1]];
+				if(loc1[0]==0){
+					loc1[0]=5;
+				}
+				if(loc2[0]==0){
+					loc2[0]=5;
+				}
+				ans+=key[(loc1[0]-1)][loc1[1]]+key[(loc2[0]-1)%5][loc2[1]];
 			}else{//different row and column
 				ans+=key[loc1[0]][loc2[1]]+key[loc2[0]][loc1[1]];
 			}
@@ -49,26 +68,29 @@ public class Square {
 		
 	}
 	
-	private static char[][] generateKey(String password){
+	private static char[][] generateKey(String password){//TODO: fix key generation
 		char[][] key = new char[5][5];
-		boolean endOfPWord = false;
-		ArrayList<Character> inputs = new ArrayList<Character>();
 		for (int i = 0; i < key.length; i++) {
 			for (int j = 0; j < key.length; j++) {
-				if (endOfPWord) {
-					if(i+j==password.length()){
-						endOfPWord = true;//needs to stop after first fail 
-					}
-					if (inputs.contains(password.charAt(i+j))) {
+				key[i][j] = 'a';
+			}
+		}
+		TreeSet<Character> inputs = new TreeSet<Character>();
+		int k = 0;
+		for (int i = 0; i < key.length; i++) {
+			for (int j = 0; j < key.length; j++) {
+				if (k<password.length()) {
+					if (inputs.contains(password.charAt(k))) {
 						if (password.charAt(i) == 'j') {
 							key[i][j] = 'i';
 							inputs.add('i');
 							inputs.add('j');
 						}
 						else{
-							key[i][j] = password.charAt(i+j);
+							key[i][j] = password.charAt(k);
 						}
 					}
+					k++;
 				}else{
 					if (!inputs.contains('a')) {
 						inputs.add('a');
@@ -166,127 +188,5 @@ public class Square {
 		return ans;
 	}
 	
-	private static ArrayList<Integer> toIntArray(String temp) {
-		
-		ArrayList<Integer> base = new ArrayList<Integer>();
-		int len = temp.length();
-		for (int i = 0; i < len; i++) {
-			switch(temp.toLowerCase().charAt(i)){
-				case 'a': base.add(0);
-				break;
-				case 'b': base.add(1);
-				break;
-				case 'c': base.add(2);
-				break;
-				case 'd': base.add(3);
-				break;
-				case 'e': base.add(4);
-				break;
-				case 'f': base.add(5);
-				break;
-				case 'g': base.add(6);
-				break;
-				case 'h': base.add(7);
-				break;
-				case 'i': base.add(8);
-				break;
-				case 'j': base.add(9);
-				break;
-				case 'k': base.add(10);
-				break;
-				case 'l': base.add(11);
-				break;
-				case 'm': base.add(12);
-				break;
-				case 'n': base.add(13);
-				break;
-				case 'o': base.add(14);
-				break;
-				case 'p': base.add(15);
-				break;
-				case 'q': base.add(16);
-				break;
-				case 'r': base.add(17);
-				break;
-				case 's': base.add(18);
-				break;
-				case 't': base.add(19);
-				break;
-				case 'u': base.add(20);
-				break;
-				case 'v': base.add(21);
-				break;
-				case 'w': base.add(22);
-				break;
-				case 'x': base.add(23);
-				break;
-				case 'y': base.add(24);
-				break;
-				case 'z': base.add(25);
-				break;
-								
-			}
-		}return base;
-	}
-	private static String toString(ArrayList<Integer> temp){
-		String ans = "";
-		for (Integer val : temp) {
-		  switch(val){
-		  	case 0: ans+="a";
-			break;
-			case 1: ans+="b";
-			break;
-			case 2: ans+="c";
-			break;
-			case 3: ans+="d";
-			break;
-			case 4: ans+="e";
-			break;
-			case 5: ans+="f";
-			break;
-			case 6: ans+="g";
-			break;
-			case 7: ans+="h";
-			break;
-			case 8: ans+="i";
-			break;
-			case 9: ans+="j";
-			break;
-			case 10: ans+="k";
-			break;
-			case 11: ans+="l";
-			break;
-			case 12: ans+="m";
-			break;
-			case 13: ans+="n";
-			break;
-			case 14: ans+="o";
-			break;
-			case 15: ans+="p";
-			break;
-			case 16: ans+="q";
-			break;
-			case 17: ans+="r";
-			break;
-			case 18: ans+="s";
-			break;
-			case 19: ans+="t";
-			break;
-			case 20: ans+="u";
-			break;
-			case 21: ans+="v";
-			break;
-			case 22: ans+="w";
-			break;
-			case 23: ans+="x";
-			break;
-			case 24: ans+="y";
-			break;
-			case 25: ans+="z";
-			break;
-			
-		  }
-		}
-		return ans;
-	}
+	
 }

@@ -49,13 +49,13 @@ public class Substitution {
 			}else if(temp.toLowerCase().charAt(0)=='f'){
 				System.out.println("Text to analyze:");
 				temp = scan.nextLine();
-				ArrayList<Integer> base = toIntArray(temp);
+				ArrayList<Integer> base = Helper.toIntArray(temp);
 				double[] ans = frequencyCount(base);
 				base = new ArrayList<Integer>();
 				base.add(0);
 				for (int i = 0; i < ans.length; i++) {
 					base.set(0, i);
-					System.out.println(toString(base)+ ": "+ ans[i]);
+					System.out.println(Helper.toString(base)+ ": "+ ans[i]);
 				}
 				
 			}
@@ -70,7 +70,7 @@ public class Substitution {
 			System.out.println(i+": "+shiftTestCollision(i, input));
 		}temp = scan.nextLine();
 		int len = Integer.parseInt(temp);
-		ArrayList<Integer> base = toIntArray(input);
+		ArrayList<Integer> base = Helper.toIntArray(input);
 		//System.out.println(base);
 		ArrayList<Integer>[] arrayLists = new ArrayList[len];
 		ArrayList<Integer> temp1 = new ArrayList<Integer>();
@@ -96,7 +96,7 @@ public class Substitution {
 		for (int i = 0; i < outputs.length; i++) {
 			key.add(outputs[i].shift);
 		}
-		return toString(key) + ": " + toString(temp1);
+		return Helper.toString(key) + ": " + Helper.toString(temp1);
 	}
 	
 	private static int shiftTestCollision(int shift, String input){
@@ -149,7 +149,7 @@ public class Substitution {
 	
 	@SuppressWarnings("unchecked")
 	private static Output caeserInt(ArrayList<Integer> base) {
-		double[] a0=a0generator();
+		double[] a0=Helper.a0generator();
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		for (int i = 1; i < 26; i++) {
 			base = incrementBase(base);
@@ -162,8 +162,8 @@ public class Substitution {
 	@SuppressWarnings("unchecked")
 	private static String caeser(String temp) {
 		String ans = "";
-		double[] a0=a0generator();
-		ArrayList<Integer> base = toIntArray(temp);
+		double[] a0=Helper.a0generator();
+		ArrayList<Integer> base = Helper.toIntArray(temp);
 		ans = printLine(0, base);
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		for (int i = 1; i < 26; i++) {
@@ -181,10 +181,10 @@ public class Substitution {
 	@SuppressWarnings("unchecked")
 	private static String affine(String temp){
 		String ans = "";
-		double[] a0=a0generator();
-		ArrayList<Integer> base = toIntArray(temp);
-		ArrayList<Integer> orig = toIntArray(temp);
-		ArrayList<Integer> base1 = toIntArray(temp);
+		double[] a0=Helper.a0generator();
+		ArrayList<Integer> base = Helper.toIntArray(temp);
+		ArrayList<Integer> orig = Helper.toIntArray(temp);
+		ArrayList<Integer> base1 = Helper.toIntArray(temp);
 		ans = printLine(0, base);
 		ArrayList<Output> outputs = new ArrayList<Output>();
 		int k = 0;
@@ -230,163 +230,8 @@ public class Substitution {
 		}else{
 			ans = "-"+b+'\n';
 		}
-		ans = ans +toString(base)+'\n';
+		ans = ans +Helper.toString(base)+'\n';
 		return ans;
 	}
-
-	private static ArrayList<Integer> toIntArray(String temp) {
-		
-		ArrayList<Integer> base = new ArrayList<Integer>();
-		int len = temp.length();
-		for (int i = 0; i < len; i++) {
-			switch(temp.toLowerCase().charAt(i)){
-				case 'a': base.add(0);
-				break;
-				case 'b': base.add(1);
-				break;
-				case 'c': base.add(2);
-				break;
-				case 'd': base.add(3);
-				break;
-				case 'e': base.add(4);
-				break;
-				case 'f': base.add(5);
-				break;
-				case 'g': base.add(6);
-				break;
-				case 'h': base.add(7);
-				break;
-				case 'i': base.add(8);
-				break;
-				case 'j': base.add(9);
-				break;
-				case 'k': base.add(10);
-				break;
-				case 'l': base.add(11);
-				break;
-				case 'm': base.add(12);
-				break;
-				case 'n': base.add(13);
-				break;
-				case 'o': base.add(14);
-				break;
-				case 'p': base.add(15);
-				break;
-				case 'q': base.add(16);
-				break;
-				case 'r': base.add(17);
-				break;
-				case 's': base.add(18);
-				break;
-				case 't': base.add(19);
-				break;
-				case 'u': base.add(20);
-				break;
-				case 'v': base.add(21);
-				break;
-				case 'w': base.add(22);
-				break;
-				case 'x': base.add(23);
-				break;
-				case 'y': base.add(24);
-				break;
-				case 'z': base.add(25);
-				break;
-								
-			}
-		}return base;
-	}
-	private static String toString(ArrayList<Integer> temp){
-		String ans = "";
-		for (Integer val : temp) {
-		  switch(val){
-		  	case 0: ans+="a";
-			break;
-			case 1: ans+="b";
-			break;
-			case 2: ans+="c";
-			break;
-			case 3: ans+="d";
-			break;
-			case 4: ans+="e";
-			break;
-			case 5: ans+="f";
-			break;
-			case 6: ans+="g";
-			break;
-			case 7: ans+="h";
-			break;
-			case 8: ans+="i";
-			break;
-			case 9: ans+="j";
-			break;
-			case 10: ans+="k";
-			break;
-			case 11: ans+="l";
-			break;
-			case 12: ans+="m";
-			break;
-			case 13: ans+="n";
-			break;
-			case 14: ans+="o";
-			break;
-			case 15: ans+="p";
-			break;
-			case 16: ans+="q";
-			break;
-			case 17: ans+="r";
-			break;
-			case 18: ans+="s";
-			break;
-			case 19: ans+="t";
-			break;
-			case 20: ans+="u";
-			break;
-			case 21: ans+="v";
-			break;
-			case 22: ans+="w";
-			break;
-			case 23: ans+="x";
-			break;
-			case 24: ans+="y";
-			break;
-			case 25: ans+="z";
-			break;
-			
-		  }
-		}
-		
-		return ans;
-		
-	}
-	private static double[] a0generator(){
-		double[] ans = new double[26];
-		ans[0] = .08167;
-		ans[1] = .01492;
-		ans[2] = .02782;
-		ans[3] = .04253;
-		ans[4] = .12702;
-		ans[5] = .02228;
-		ans[6] = .02015;
-		ans[7] = .06094;
-		ans[8] = .06966;
-		ans[9] = .00153;
-		ans[10] = .00772;
-		ans[11] = .04025;
-		ans[12] = .02406;
-		ans[13] = .06749;
-		ans[14] = .07507;
-		ans[15] = .01929;
-		ans[16] = .00095;
-		ans[17] = .05987;
-		ans[18] = .06327;
-		ans[19] = .09056;
-		ans[20] = .02758;
-		ans[21] = .00978;
-		ans[22] = .02360;
-		ans[23] = .00150;
-		ans[24] = .01974;
-		ans[25] = .00074;
-		return ans;
-	}
+	
 }
